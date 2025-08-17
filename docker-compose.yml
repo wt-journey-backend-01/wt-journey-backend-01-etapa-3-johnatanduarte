@@ -1,0 +1,25 @@
+version: "3.6"
+# Define os serviços (containers) que compõem a aplicação.
+services:
+  # Nome do serviço do banco de dados.
+  postgres:
+    # Imagem do PostgreSQL que será usada.
+    image: postgres:13
+    # Nome do container.
+    container_name: policia_db_container
+    # Mapeia a porta 5432 do container para a porta 5432 da sua máquina.
+    ports:
+      - "5432:5432"
+    # Define as variáveis de ambiente para o container, lendo do arquivo .env.
+    env_file:
+      - .env
+    # Define um volume para persistir os dados do banco de dados.
+    # Isso garante que os dados não sejam perdidos se o container for recriado.
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # Define uma política de reinicialização para o container.
+    restart: always
+
+# Define os volumes nomeados.
+volumes:
+  postgres_data:
